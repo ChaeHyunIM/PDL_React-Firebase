@@ -26,6 +26,8 @@ const Signup = () => {
     })
 
     const {email, pw} = signupInput;
+    console.log(signupInput);
+
     const handleSignupInput = e => {
         const { name, value } = e.target;
         setSignupInput({
@@ -41,6 +43,7 @@ const Signup = () => {
         .then((userCredential) => {
             const user = userCredential.user;
             console.log('user:' , user);
+            alert('Signup Success');
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -75,7 +78,7 @@ const Signup = () => {
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSignupInput} sx={{ mt: 3 }}>
+                    <Box component="form" noValidate onChange={handleSignupInput} onSubmit={handleSignupInput} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             {/*<Grid item xs={12}>*/}
                             {/*    <TextField*/}
@@ -114,7 +117,7 @@ const Signup = () => {
                                 <TextField
                                     required
                                     fullWidth
-                                    name="password"
+                                    name="pw"
                                     label="Password"
                                     type="password"
                                     id="password"
