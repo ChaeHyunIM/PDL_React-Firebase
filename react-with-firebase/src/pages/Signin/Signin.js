@@ -12,8 +12,8 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-const Login = () => {
+import {getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, getRedirectResult} from "firebase/auth";
+const Signin = () => {
     const [loginInput, setLoginInput] = useState( {
         email: '',
         pw: '',
@@ -32,6 +32,29 @@ const Login = () => {
     // console.log(loginInput);
 
     const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider).then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+    }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+    });
+    getRedirectResult(auth).then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+    }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+    });
+
+
 
     const clickButton = e => {
         e.preventDefault();
@@ -39,14 +62,14 @@ const Login = () => {
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user);
-                alert('Login Success')
+                alert('Signin Success')
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorCode);
                 console.log(errorMessage);
-                alert('Login Failed!')
+                alert('Signin Failed!')
             });
     }
 
@@ -140,4 +163,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default Signin;

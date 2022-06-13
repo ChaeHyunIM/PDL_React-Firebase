@@ -16,8 +16,8 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-// import app from '../../firebase';
-const theme = createTheme()
+
+const theme = createTheme();
 
 const Signup = () => {
     const [signupInput, setSignupInput] = useState({
@@ -26,7 +26,7 @@ const Signup = () => {
     })
 
     const {email, pw} = signupInput;
-    console.log(signupInput);
+    // console.log(signupInput);
 
     const handleSignupInput = e => {
         const { name, value } = e.target;
@@ -35,7 +35,6 @@ const Signup = () => {
             [name]: value,
         });
     };
-
     const [value, setValue] = useState(null);
 
     const auth = getAuth();
@@ -55,7 +54,7 @@ const Signup = () => {
 
     const clickButton = e => {
         e.preventDefault();
-        signupEmail(email.value, pw.value).then((res) => {
+        signupEmail(email, pw).then((res) => {
             console.log(res);
         })
     }
